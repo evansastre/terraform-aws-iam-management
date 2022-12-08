@@ -1,0 +1,124 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:RunInstances",
+                "ec2:CreateImage",
+                "ec2:CreateLaunchTemplate",
+                "ec2:CreateNetworkInterface",
+                "ec2:CreateTags",
+                "ec2:CreateVolume",
+                "ec2:CreateSecurityGroup",
+                "ec2:CreateSnapshot"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "ec2:Describe*",
+                "sts:*"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"         
+        },
+        {
+            "Action": [
+                "ec2:AttachVolume",
+                "ec2:AssociateIamInstanceProfile",
+                "ec2:AuthorizeSecurityGroupEgress",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:DeleteLaunchTemplate",
+                "ec2:DeleteNetworkInterface",
+                "ec2:DeleteSecurityGroup",
+                "ec2:DeleteSnapshot",
+                "ec2:DeleteTags",
+                "ec2:DeleteVolume",
+                "ec2:DeregisterImage",
+                "ec2:DetachVolume",
+                "ec2:DisassociateIamInstanceProfile",
+                "ec2:RebootInstances",
+                "ec2:StartInstances",
+                "ec2:StopInstances",
+                "ec2:TerminateInstances"
+            ],
+            "Effect": "Allow",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:ResourceTag/resource_managed_by": "$${aws:PrincipalTag/resource_managed_by}"
+                }
+            }
+        },
+        {
+            "Action": [
+                "ec2:AuthorizeSecurityGroupEgress",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:DeleteSecurityGroup",
+                "ec2:RevokeSecurityGroupEgress",
+                "ec2:RevokeSecurityGroupIngress"
+            ],
+            "Effect": "Allow",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:ResourceTag/resource_managed_by": "$${aws:PrincipalTag/resource_managed_by}"
+                }
+            }
+        },
+        {
+            "Action": [
+                "s3:CreateBucket",
+                "s3:DeleteBucket",
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:PutBucketAcl",
+                "s3:PutObject",
+                "s3:PutBucketTagging",
+                "s3:PutObjectTagging"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::citrix*"
+        },
+        {
+            "Action": [
+                "ebs:StartSnapshot",
+                "ebs:GetSnapshotBlock",
+                "ebs:PutSnapshotBlock",
+                "ebs:CompleteSnapshot",
+                "ebs:ListSnapshotBlocks",
+                "ebs:ListChangedBlocks"
+            ],
+            "Effect": "Allow",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:ResourceTag/resource_managed_by": "$${aws:PrincipalTag/resource_managed_by}"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "kms:CreateGrant",
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:GenerateDataKeyWithoutPlainText",
+                "kms:ReEncryptTo",
+                "kms:ReEncryptFrom"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:ResourceTag/resource_managed_by": "$${aws:PrincipalTag/resource_managed_by}"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::*:role/*"
+        }
+    ]
+}
